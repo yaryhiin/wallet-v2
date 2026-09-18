@@ -6,7 +6,7 @@
     "yes": "Tak",
     "add": "Dodaj"
   },
-  "welcome": {
+  "welcomeScreen": {
     "title": "Witamy w aplikacji Wallet",
     "text": "Śledź wydatki, przychody, przelewy, wiele kont i walut — wszystko w jednej prostej aplikacji internetowej."
   },

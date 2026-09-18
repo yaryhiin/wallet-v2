@@ -1,4 +1,8 @@
 {
+  "language": {
+    "en": "English",
+    "pl": "Polish"
+  },
   "common": {
     "back": "Back",
     "save": "Save",
@@ -6,9 +10,9 @@
     "yes": "Yes",
     "add": "Add"
   },
-  "welcome": {
+  "welcomeScreen": {
     "title": "Welcome to the Wallet App",
-    "text": "Track expenses, income, transfers, multiple accounts and currencies — all in one simple web app."
+    "desc": "Track expenses, income, transfers, multiple accounts and currencies — all in one simple web app."
   },
   "auth": {
     "login": "Log In",
@@ -16,7 +20,8 @@
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "error": "Password must be at least 6 characters"
   },
   "theme": {
     "dark": "Dark",

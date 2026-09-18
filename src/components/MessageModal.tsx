@@ -1,0 +1,32 @@
+import { useTranslation } from "react-i18next";
+
+type MessageModalProps = {
+  title: string;
+  text: string;
+  onClose: () => void;
+};
+
+const MessageModal = ({ title, text, onClose }: MessageModalProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="modal">
+      <div className="modalContent">
+        <h2 className="heading">{title}</h2>
+        <p style={{ whiteSpace: "pre-line" }} className="{styles.message}">
+          {text}
+        </p>
+        <div className="buttonContainer">
+          <button
+            className="{cn(styles.backBtn, button)}"
+            onClick={() => onClose()}
+          >
+            {t("common.ok")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MessageModal;
