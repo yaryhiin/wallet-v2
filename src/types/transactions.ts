@@ -1,5 +1,15 @@
 export type Transaction = {
-  type: string;
+  account_id: string;
+  type: "income" | "expense";
+  category: string;
+  amount: string;
+  currency: string;
+  date: string;
+};
+
+export type TransactionToPaste = {
+  account_id: string;
+  type: "income" | "expense";
   category: string;
   amount: number;
   currency: string;
@@ -10,7 +20,7 @@ export type TransactionDB = {
   id: string;
   user_id: string;
   account_id: string;
-  type: string;
+  type: "income" | "expense";
   category: string;
   amount: number;
   currency: string;

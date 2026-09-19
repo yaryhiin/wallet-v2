@@ -1,5 +1,5 @@
 import { supabase } from "../supabase";
-import type { Transaction, TransactionDB } from "../types/transactions";
+import type { TransactionDB, TransactionToPaste } from "../types/transactions";
 import { getCurrentUserId } from "./auth";
 
 export async function getTransactions(): Promise<TransactionDB[]> {
@@ -17,7 +17,7 @@ export async function getTransactions(): Promise<TransactionDB[]> {
 }
 
 export async function createTransaction(
-  transaction: Transaction,
+  transaction: TransactionToPaste,
 ): Promise<TransactionDB> {
   const userId = await getCurrentUserId();
 
@@ -36,7 +36,7 @@ export async function createTransaction(
 }
 
 export async function updateTransaction(
-  transaction: Transaction,
+  transaction: TransactionToPaste,
   transactionId: string,
 ): Promise<TransactionDB> {
   const userId = await getCurrentUserId();

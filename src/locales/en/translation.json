@@ -89,7 +89,7 @@
   },
   "transaction": {
     "cur": "Currency",
-    "addTrans": "Add Trnsaction",
+    "addTrans": "Add Transaction",
     "changeTrans": "Change Transaction",
     "all": "All Transaction",
     "viewAll": "View All Transactions",
@@ -114,8 +114,7 @@
     "selectCategory": "Select Category",
     "method": "Method",
     "selectMethod": "Select Method",
-    "date": "Date",
-    "loading": "Loading transaction..."
+    "date": "Date"
   },
   "icons": {
     "card_blue": "Card Blue",

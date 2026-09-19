@@ -69,8 +69,8 @@ const AccountForm = ({
             {t("account.selectCur")}
           </option>
           {currencies &&
-            currencies.map((currency, index) => (
-              <option key={index} value={currency.iso_code}>
+            currencies.map((currency) => (
+              <option key={currency.iso_numeric} value={currency.iso_code}>
                 {currency.iso_code} - {currency.name}
               </option>
             ))}

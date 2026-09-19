@@ -10,3 +10,10 @@ export type AccountErrors = {
   currency: boolean;
   icon: boolean;
 };
+
+export type TransactionErrors = {
+  account_id: boolean;
+  amount: boolean;
+  category: boolean;
+  date: boolean;
+};

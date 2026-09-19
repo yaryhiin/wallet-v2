@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
 import WelcomeScreen from "./pages/WelcomeScreen";
+import CreateTransaction from "./pages/CreateTransaction";
 
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -121,6 +122,15 @@ function App() {
 
                 <Route path="/account/new" element={<CreateAccount />} />
                 <Route path="/account/:accountId" element={<EditAccount />} />
+
+                <Route
+                  path="/transaction/new/income"
+                  element={<CreateTransaction type="income" />}
+                />
+                <Route
+                  path="/transaction/new/expense"
+                  element={<CreateTransaction type="expense" />}
+                />
               </Route>
             )}
           </Routes>
