@@ -4,7 +4,9 @@ export type AuthErrors = {
   email: boolean;
 };
 
-export type AddErrors = {
+export type AccountErrors = {
   name: boolean;
-  category: boolean;
+  balance: boolean;
+  currency: boolean;
+  icon: boolean;
 };

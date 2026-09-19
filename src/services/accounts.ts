@@ -1,5 +1,5 @@
 import { supabase } from "../supabase";
-import type { Account, AccountDB } from "../types/accounts";
+import type { Account, AccountDB, AccountToPaste } from "../types/accounts";
 import { getCurrentUserId } from "./auth";
 
 export async function getAccounts(): Promise<AccountDB[]> {
@@ -13,10 +13,12 @@ export async function getAccounts(): Promise<AccountDB[]> {
     throw error;
   }
 
-  return data || [];
+  return data;
 }
 
-export async function createAccount(account: Account): Promise<AccountDB> {
+export async function createAccount(
+  account: AccountToPaste,
+): Promise<AccountDB> {
   const userId = await getCurrentUserId();
   const { data, error } = await supabase
     .from("accounts")

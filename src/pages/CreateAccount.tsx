@@ -1,5 +1,131 @@
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import AccountForm from "../components/AccountForm";
+import InfoModal from "../components/InfoModal";
+import LoadingScreen from "../components/LoadingScreen";
+
+import type { AccountErrors } from "../types/errors";
+import type { Account, AccountToPaste, Currency } from "../types/accounts";
+
+import { fetchCurrencies } from "../utils/currencies";
+import { getPersistedJSON, setPersistedJSON } from "../utils/storage";
+import { createAccount } from "../services/accounts";
+
+import { useAsyncAction } from "../hooks/useAsyncAction";
+
 const CreateAccount = () => {
-  return <div>CreateAccount</div>;
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { run, state } = useAsyncAction();
+
+  const [loading, setLoading] = useState(true);
+  const [currencies, setCurrencies] = useState<Currency[] | null>(null);
+  const [account, setAccount] = useState<Account>(
+    getPersistedJSON("account", {
+      name: "",
+      balance: "",
+      currency: "",
+      icon: "",
+    }),
+  );
+  const [errors, setErrors] = useState<AccountErrors>({
+    name: false,
+    balance: false,
+    currency: false,
+    icon: false,
+  });
+
+  useEffect(() => {
+    async function loadCurrencies() {
+      setLoading(true);
+      try {
+        const currencies = await fetchCurrencies();
+        setCurrencies(currencies);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCurrencies();
+  }, []);
+
+  useEffect(() => {
+    setPersistedJSON("account", account);
+  }, [account]);
+
+  async function handleCreateAccount() {
+    const newErrors: AccountErrors = {
+      name: false,
+      balance: false,
+      currency: false,
+      icon: false,
+    };
+    const formattedAccount: AccountToPaste = {
+      ...account,
+      balance: account.balance ? Number(account.balance) : 0,
+    };
+    if (!account.name) newErrors.name = true;
+    if (
+      !formattedAccount.balance ||
+      formattedAccount.balance < -999999999 ||
+      formattedAccount.balance > 999999999
+    )
+      newErrors.balance = true;
+    if (!account.currency) newErrors.currency = true;
+    if (!account.icon) newErrors.icon = true;
+
+    if (Object.values(newErrors).some(Boolean)) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const success = await run("saving", async () => {
+      await createAccount(formattedAccount);
+    });
+    if (success) {
+      setInterval(() => {
+        navigate("/");
+        localStorage.removeItem("account");
+      }, 1000);
+    }
+  }
+
+  function onBack() {
+    navigate("/");
+    localStorage.removeItem("account");
+  }
+
+  if (loading) return <LoadingScreen />;
+
+  return (
+    <div className="flex flex-col items-center p-5">
+      <h1 className="text-2xl font-bold mb-10">{t("account.addAcc")}</h1>
+      <AccountForm
+        account={account}
+        setAccount={setAccount}
+        currencies={currencies}
+        errors={errors}
+      />
+      <div className="flex flex-row justify-center gap-5 mt-10">
+        <button
+          className="px-5 py-2 border bg-[var(--back-btn-bg)]"
+          onClick={onBack}
+        >
+          {t("common.back")}
+        </button>
+        <button
+          className="px-5 py-2 border bg-[var(--save-btn-bg)]"
+          onClick={handleCreateAccount}
+        >
+          {t("common.save")}
+        </button>
+      </div>
+      <InfoModal state={state} />
+    </div>
+  );
 };
 
 export default CreateAccount;

@@ -1,5 +1,3 @@
-const AccountCard = () => {
-  return <div>AccountCard</div>;
-};
+const AccountCard = () => {};
 
 export default AccountCard;

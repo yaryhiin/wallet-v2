@@ -1,16 +1,59 @@
+import { useState, useEffect } from "react";
+import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import type { AccountDB } from "../types/accounts";
+import { getAccounts } from "../services/accounts";
+import LoadingScreen from "../components/LoadingScreen";
+
 const Home = () => {
-  const accounts = [{ name: "Main" }, { name: "Card" }, { name: "Savings" }];
+  const navigate = useNavigate();
+
+  const [accounts, setAccount] = useState<AccountDB[] | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAccounts() {
+      setLoading(true);
+      try {
+        const accountsData = await getAccounts();
+        if (accountsData) setAccount(accountsData);
+      } catch (error) {
+        console.error("Error fetching accounts", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAccounts();
+  }, []);
+
+  if (loading) return <LoadingScreen />;
+
   return (
-    <div className="flex flex-col w-fit items-center  bg-black">
-      <div className="grid w-fit grid-cols-2 gap-4 p-4 bg-gray-600">
-        {accounts.map((acc) => (
-          <div
-            key={acc.name}
-            className="flex w-20 h-20 p-2 rounded-md bg-white text-black items-center justify-center"
-          >
-            {acc.name}
-          </div>
-        ))}
+    <div className="flex flex-col w-fit items-center">
+      <div className="grid w-fit grid-cols-2 gap-4 p-4">
+        {accounts &&
+          accounts.map((acc) => (
+            <div
+              key={acc.name}
+              className="flex flex-col gap-0 w-35 h-35 p-3 border border-[var(--card-border)] rounded-md bg-[var(--card-bg)] text-[var(--text)] items-center justify-center"
+            >
+              <img
+                src={`/images/accounts/${acc.icon}.png`}
+                aria-label={`${acc.icon} account icon`}
+              />
+              <h2 className="text-lg font-semibold">{acc.name}</h2>
+              <p>{acc.balance}</p>
+              <p>{acc.currency}</p>
+            </div>
+          ))}
+        <button
+          onClick={() => navigate("/account/new")}
+          aria-label="Create New Account"
+          className="flex w-35 h-35 p-2 border border-[var(--card-border)] rounded-md bg-[var(--card-bg)] text-[var(--text)] items-center justify-center"
+        >
+          <Plus size={60} />
+        </button>
       </div>
     </div>
   );

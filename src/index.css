@@ -19,10 +19,11 @@ body {
 
 button {
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-input {
+input,
+select {
   background-color: var(--input-bg);
   color: var(--input-text);
   border-radius: 8px;

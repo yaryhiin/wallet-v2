@@ -15,6 +15,7 @@ import WelcomeScreen from "./pages/WelcomeScreen";
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
+const CreateAccount = lazy(() => import("./pages/CreateAccount"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -91,7 +92,6 @@ function App() {
                   <Layout
                     toggleTheme={toggleTheme}
                     theme={theme}
-                    // session={false}
                     language={language}
                     setLanguage={setLanguage}
                   />
@@ -106,11 +106,9 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
             ) : (
-              // profile && (
               <Route
                 element={
                   <Layout
-                    // session={true}
                     toggleTheme={toggleTheme}
                     theme={theme}
                     language={language}
@@ -119,34 +117,12 @@ function App() {
                 }
               >
                 <Route path="/" element={<Home />} />
-
-                {/* <Route
-                    path="/profile"
-                    element={
-                      <ProfilePage
-                        toggleTheme={toggleTheme}
-                        theme={theme}
-                        language={language}
-                        setLanguage={setLanguage}
-                        profile={profile}
-                        handleUpdateProfile={handleUpdateProfile}
-                      />
-                    }
-                  /> */}
+                <Route path="/account/new" element={<CreateAccount />} />
               </Route>
-              //   )
-              //
             )}
           </Routes>
         </Suspense>
       </Router>
-      {/* {showProfileSetup && (
-        <ProfileSetupModal
-          onCreate={handleCreateProfile}
-          language={language}
-          setLanguage={setLanguage}
-        />
-      )} */}
     </>
   );
 }

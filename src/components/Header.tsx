@@ -1,45 +1,18 @@
-// import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { Dispatch, SetStateAction } from "react";
 
-// import { UserRound } from "lucide-react";
-
 type HeaderProps = {
-  //   session: boolean;
   toggleTheme: () => void;
   theme: string;
   language: string;
   setLanguage: Dispatch<SetStateAction<string>>;
 };
 
-const Header = ({
-  toggleTheme,
-  theme,
-  //   session,
-  language,
-  setLanguage,
-}: HeaderProps) => {
-  //   const navigate = useNavigate();
+const Header = ({ toggleTheme, theme, language, setLanguage }: HeaderProps) => {
   const { t, i18n } = useTranslation();
 
   return (
     <header className="bg-[var(--header-bg)] border-b border-[var(--border)] w-full flex flex-row sticky top-0 z-1000 p-5 items-center justify-between">
-      {/* {session ? (
-        <div className={styles.sessionBox}>
-          <button
-            className={styles.profileLogo}
-            onClick={() => navigate("/profile")}
-            aria-label={t("profile.title")}
-          >
-            <UserRound size={20} />
-          </button>
-          <h2 className={styles.appName}>
-            <span className={styles.mainLetter}>S</span>
-            <span className={styles.restLetters}>etwise</span>
-          </h2>
-          <div></div>
-        </div>
-      ) : ( */}
       <div className="border bg-[var(--input-bg)] border-[var(--input-border)] px-3 py-2 flex rounded-xl ">
         <button
           onClick={toggleTheme}

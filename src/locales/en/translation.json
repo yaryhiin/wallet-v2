@@ -27,6 +27,28 @@
     "dark": "Dark",
     "light": "Light"
   },
+  "infoModal": {
+    "save": {
+      "title": "Saving",
+      "text": "Saving your changes..."
+    },
+    "delete": {
+      "title": "Deleting",
+      "text": "Deleting item..."
+    },
+    "success": {
+      "title": "Success",
+      "text": "Completed successfully"
+    },
+    "error": {
+      "title": "Error",
+      "text": "Something went wrong. Please try again."
+    },
+    "info": {
+      "title": "Information",
+      "text": "Here is something you should know."
+    }
+  },
   "modal": {
     "category": {
       "title": "Confirm Action",

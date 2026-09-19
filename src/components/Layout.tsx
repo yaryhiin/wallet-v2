@@ -39,7 +39,7 @@ export default function Layout({
           setLanguage={setLanguage}
         />
 
-        <main className="container">
+        <main>
           <Outlet />
         </main>
         <Footer />
