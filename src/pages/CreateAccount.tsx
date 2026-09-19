@@ -86,7 +86,7 @@ const CreateAccount = () => {
       await createAccount(formattedAccount);
     });
     if (success) {
-      setInterval(() => {
+      setTimeout(() => {
         navigate("/");
         localStorage.removeItem("account");
       }, 1000);

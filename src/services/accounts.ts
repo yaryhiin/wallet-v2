@@ -1,12 +1,33 @@
 import { supabase } from "../supabase";
-import type { Account, AccountDB, AccountToPaste } from "../types/accounts";
+import type { AccountDB, AccountToPaste } from "../types/accounts";
 import { getCurrentUserId } from "./auth";
 
 export async function getAccounts(): Promise<AccountDB[]> {
+  const userId = await getCurrentUserId();
+
   const { data, error } = await supabase
     .from("accounts")
     .select("*")
+    .eq("user_id", userId)
     .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getAccountById(accountId: string): Promise<AccountDB> {
+  const userId = await getCurrentUserId();
+
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("id", accountId)
+    .single();
 
   if (error) {
     console.error("Error fetching accounts:", error);
@@ -41,7 +62,7 @@ export async function createAccount(
 }
 
 export async function updateAccount(
-  account: Account,
+  account: AccountToPaste,
   accountId: string,
 ): Promise<AccountDB> {
   const userId = await getCurrentUserId();

@@ -49,17 +49,16 @@
       "text": "Here is something you should know."
     }
   },
+  "execute": {
+    "title": "Confirm Action"
+  },
   "modal": {
-    "category": {
-      "title": "Confirm Action",
-      "text": "Are you sure you want to delete this category \n This action cannot be undone."
-    },
+    "category": "Are you sure you want to delete this category \n This action cannot be undone.",
     "transfer": {
       "title": "Attention!",
       "text": "To make a transfer, you need at least two accounts.\n Do you want to add an account now?"
     },
     "account": {
-      "title": "Confirm Action",
       "part1": "This account has",
       "part2": ". \n You sure you want to delete it?"
     },

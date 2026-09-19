@@ -28,6 +28,7 @@ const AccountForm = ({
         <input
           type="text"
           value={!account.name ? "" : account.name}
+          maxLength={25}
           placeholder={t("account.name.placeHolder")}
           className={`${errors.name ? "border-[var(--error-border)]" : "border-[var(--input-border)]"} border max-w-45`}
           required

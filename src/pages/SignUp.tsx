@@ -7,10 +7,6 @@ import type { AuthErrors } from "../types/errors";
 
 import MessageModal from "../components/MessageModal";
 
-const MODAL_TITLE = "Account created";
-const MODAL_TEXT =
-  "Check your email for a confirmation link. \n If you already have an account, try logging in instead.";
-
 const SignUp = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -186,8 +182,8 @@ const SignUp = () => {
         </div>
         {showModal && (
           <MessageModal
-            title={MODAL_TITLE}
-            text={MODAL_TEXT}
+            title={t("modal.created.title")}
+            text={t("modal.created.text")}
             onClose={() => {
               setShowModal(false);
               navigate("/login");

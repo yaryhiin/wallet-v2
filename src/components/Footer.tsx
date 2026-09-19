@@ -13,7 +13,7 @@ const Footer = () => {
           Tim Yaryhin
         </a>
       </p>
-      <p>Wallet App &copy; 2026</p>
+      <p>Wallet App &copy; {new Date().getFullYear()}</p>
     </footer>
   );
 };

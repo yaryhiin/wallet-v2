@@ -16,6 +16,7 @@ const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
 const CreateAccount = lazy(() => import("./pages/CreateAccount"));
+const EditAccount = lazy(() => import("./pages/EditAccount"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -117,7 +118,9 @@ function App() {
                 }
               >
                 <Route path="/" element={<Home />} />
+
                 <Route path="/account/new" element={<CreateAccount />} />
+                <Route path="/account/:accountId" element={<EditAccount />} />
               </Route>
             )}
           </Routes>
