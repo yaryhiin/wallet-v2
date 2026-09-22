@@ -16,6 +16,40 @@ export async function getTransactions(): Promise<TransactionDB[]> {
   return data || [];
 }
 
+export async function getLatestTransactions(
+  limit: number,
+): Promise<TransactionDB[]> {
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error("Error fetching transactions:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+export async function getTransactionById(
+  transationId: string,
+): Promise<TransactionDB> {
+  const userId = await getCurrentUserId();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("id", transationId)
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
 export async function createTransaction(
   transaction: TransactionToPaste,
 ): Promise<TransactionDB> {

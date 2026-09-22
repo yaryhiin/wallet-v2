@@ -7,10 +7,11 @@ import InfoModal from "../components/InfoModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 import type { AccountErrors } from "../types/errors";
-import type { Account, AccountToPaste, Currency } from "../types/accounts";
+import type { Account, Currency } from "../types/accounts";
 
 import { fetchCurrencies } from "../utils/currencies";
 import { getPersistedJSON, setPersistedJSON } from "../utils/storage";
+import { checkAccount } from "../utils/checkData";
 import { createAccount } from "../services/accounts";
 
 import { useAsyncAction } from "../hooks/useAsyncAction";
@@ -57,25 +58,7 @@ const CreateAccount = () => {
   }, [account]);
 
   async function handleCreateAccount() {
-    const newErrors: AccountErrors = {
-      name: false,
-      balance: false,
-      currency: false,
-      icon: false,
-    };
-    const formattedAccount: AccountToPaste = {
-      ...account,
-      balance: account.balance ? Number(account.balance) : 0,
-    };
-    if (!account.name) newErrors.name = true;
-    if (
-      !formattedAccount.balance ||
-      formattedAccount.balance < -999999999 ||
-      formattedAccount.balance > 999999999
-    )
-      newErrors.balance = true;
-    if (!account.currency) newErrors.currency = true;
-    if (!account.icon) newErrors.icon = true;
+    const { formattedAccount, newErrors } = checkAccount(account);
 
     if (Object.values(newErrors).some(Boolean)) {
       setErrors(newErrors);

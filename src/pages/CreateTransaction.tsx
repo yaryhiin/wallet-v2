@@ -7,7 +7,7 @@ import InfoModal from "../components/InfoModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 import type { TransactionErrors } from "../types/errors";
-import type { Transaction, TransactionToPaste } from "../types/transactions";
+import type { Transaction } from "../types/transactions";
 import type {
   // Category,
   CategoryDB,
@@ -15,6 +15,7 @@ import type {
 import type { AccountDB } from "../types/accounts";
 
 import { getPersistedJSON, setPersistedJSON } from "../utils/storage";
+import { checkTransaction } from "../utils/checkData";
 import { createTransaction } from "../services/transactions";
 import {
   // createCategory,
@@ -43,7 +44,11 @@ const CreateTransaction = ({ type }: CreateTransactionType) => {
       type,
       amount: "",
       category: "",
-      date: "",
+      date: new Date(
+        new Date().getTime() - new Date().getTimezoneOffset() * 60000,
+      )
+        .toISOString()
+        .slice(0, 16),
       currency: "",
     }),
   );
@@ -91,25 +96,7 @@ const CreateTransaction = ({ type }: CreateTransactionType) => {
   }, [transaction]);
 
   async function handleCreateTransaction() {
-    const newErrors: TransactionErrors = {
-      account_id: false,
-      amount: false,
-      category: false,
-      date: false,
-    };
-    const formattedTransaction: TransactionToPaste = {
-      ...transaction,
-      amount: transaction.amount ? Number(transaction.amount) : 0,
-    };
-    if (!transaction.account_id) newErrors.account_id = true;
-    if (
-      !formattedTransaction.amount ||
-      formattedTransaction.amount < -999999999 ||
-      formattedTransaction.amount > 999999999
-    )
-      newErrors.amount = true;
-    if (!transaction.category) newErrors.category = true;
-    if (!transaction.date) newErrors.date = true;
+    const { formattedTransaction, newErrors } = checkTransaction(transaction);
 
     if (Object.values(newErrors).some(Boolean)) {
       setErrors(newErrors);
@@ -155,12 +142,14 @@ const CreateTransaction = ({ type }: CreateTransactionType) => {
     <div className="flex flex-col items-center p-5">
       <h1 className="text-2xl font-bold mb-10">{t("transaction.addTrans")}</h1>
       <TransactionForm
+        pageType="create"
         transaction={transaction}
         setTransaction={setTransaction}
         accounts={accounts}
         categories={
           categories?.filter((category) => category.type === type) ?? null
         }
+        setCategories={setCategories}
         errors={errors}
       />
       <div className="flex flex-row justify-center gap-5 mt-10">

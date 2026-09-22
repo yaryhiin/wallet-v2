@@ -11,13 +11,14 @@ import { useTranslation } from "react-i18next";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
 import WelcomeScreen from "./pages/WelcomeScreen";
-import CreateTransaction from "./pages/CreateTransaction";
 
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
 const CreateAccount = lazy(() => import("./pages/CreateAccount"));
 const EditAccount = lazy(() => import("./pages/EditAccount"));
+const CreateTransaction = lazy(() => import("./pages/CreateTransaction"));
+const EditTransaction = lazy(() => import("./pages/EditTransaction"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -130,6 +131,10 @@ function App() {
                 <Route
                   path="/transaction/new/expense"
                   element={<CreateTransaction type="expense" />}
+                />
+                <Route
+                  path="/transaction/edit/:transactionId"
+                  element={<EditTransaction />}
                 />
               </Route>
             )}

@@ -7,8 +7,9 @@ import type { TransactionDB } from "../types/transactions";
 
 import LoadingScreen from "../components/LoadingScreen";
 import AccountCard from "../components/AccountCard";
+import TransactionCard from "../components/TransactionCard";
 
-import { getTransactions } from "../services/transactions";
+import { getLatestTransactions } from "../services/transactions";
 import { getAccounts } from "../services/accounts";
 
 const Home = () => {
@@ -39,7 +40,7 @@ const Home = () => {
     async function loadTransactions() {
       setLoadingTransactions(true);
       try {
-        const transactionsData = await getTransactions();
+        const transactionsData = await getLatestTransactions(3);
         if (transactionsData) setTransactions(transactionsData);
       } catch (error) {
         console.error("Error fetching transactions", error);
@@ -68,12 +69,15 @@ const Home = () => {
           </Link>
         )}
       </div>
-      <div>
+      <div className="w-full flex flex-col gap-4 p-4">
         {transactions &&
+          accounts &&
           transactions.map((trans) => (
-            <div>
-              <h2>{trans.amount}</h2>
-            </div>
+            <TransactionCard
+              key={trans.id}
+              transaction={trans}
+              accounts={accounts}
+            />
           ))}
       </div>
       <div className="flex flex-row gap-7">

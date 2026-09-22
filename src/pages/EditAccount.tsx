@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAsyncAction } from "../hooks/useAsyncAction";
 import { useParams } from "react-router-dom";
 
-import type { Currency, Account, AccountToPaste } from "../types/accounts";
+import type { Currency, Account } from "../types/accounts";
 import type { AccountErrors } from "../types/errors";
 
 import AccountForm from "../components/AccountForm";
@@ -19,6 +19,7 @@ import {
 } from "../services/accounts";
 import { getPersistedJSON, setPersistedJSON } from "../utils/storage";
 import { fetchCurrencies } from "../utils/currencies";
+import { checkAccount } from "../utils/checkData";
 
 const EditAccount = () => {
   const navigate = useNavigate();
@@ -88,31 +89,14 @@ const EditAccount = () => {
   }, []);
 
   useEffect(() => {
+    if (loading || !account) return;
     setPersistedJSON(accountKey, account);
-  }, [account, accountKey]);
+  }, [account, accountKey, loading]);
 
   async function handleUpdateAccount() {
     if (!accountId) return;
 
-    const newErrors: AccountErrors = {
-      name: false,
-      balance: false,
-      currency: false,
-      icon: false,
-    };
-    const formattedAccount: AccountToPaste = {
-      ...account,
-      balance: account.balance ? Number(account.balance) : 0,
-    };
-    if (!account.name) newErrors.name = true;
-    if (
-      !formattedAccount.balance ||
-      formattedAccount.balance < -999999999 ||
-      formattedAccount.balance > 999999999
-    )
-      newErrors.balance = true;
-    if (!account.currency) newErrors.currency = true;
-    if (!account.icon) newErrors.icon = true;
+    const { formattedAccount, newErrors } = checkAccount(account);
 
     if (Object.values(newErrors).some(Boolean)) {
       setErrors(newErrors);

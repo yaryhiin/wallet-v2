@@ -62,6 +62,7 @@
       "part1": "This account has",
       "part2": ". \n You sure you want to delete it?"
     },
+    "transaction": "You sure you want to delete this transaction",
     "created": {
       "title": "Account created",
       "text": "Check your email for a confirmation link. \n If you already have an account, try logging in instead."
@@ -109,7 +110,12 @@
     "from": "From",
     "to": "To",
     "rate": { "title": "Exchange Rate", "placeHolder": "Enter exchange rate" },
-    "type": { "title": "Type", "income": "Income", "expense": "Expense" },
+    "type": {
+      "title": "Type",
+      "income": "Income",
+      "expense": "Expense",
+      "select": "Select Type"
+    },
     "category": "Category",
     "selectCategory": "Select Category",
     "method": "Method",

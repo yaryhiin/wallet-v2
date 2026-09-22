@@ -17,3 +17,8 @@ export type TransactionErrors = {
   category: boolean;
   date: boolean;
 };
+
+export type CategoryErrors = {
+  name: boolean;
+  type: boolean;
+};

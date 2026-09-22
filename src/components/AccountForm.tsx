@@ -70,7 +70,7 @@ const AccountForm = ({
           </option>
           {currencies &&
             currencies.map((currency) => (
-              <option key={currency.iso_numeric} value={currency.iso_code}>
+              <option key={currency.iso_code} value={currency.iso_code}>
                 {currency.iso_code} - {currency.name}
               </option>
             ))}
